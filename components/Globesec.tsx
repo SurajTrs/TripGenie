@@ -61,7 +61,7 @@ const GlobeComponent = () => {
       </div>
       
       {/* Globe with Circular Mask */}
-      <div className="w-[500px] h-[500px] rounded-full overflow-hidden relative z-0">
+      <div className="w-[500px] h-[500px] rounded-full overflow-hidden relative" style={{ zIndex: 0 }}>
         <Globe
           ref={globeRef}
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -81,7 +81,7 @@ const GlobeComponent = () => {
       </div>
       
       {/* Orbiting Plane Icon */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full animate-spin pointer-events-none z-20" style={{animationDuration: '20s'}}>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none" style={{ animation: 'spin 20s linear infinite', zIndex: 20 }}>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl">
           <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>

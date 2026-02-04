@@ -13,9 +13,11 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setIsMounted(true);
     if (typeof window !== 'undefined') {
       const userData = localStorage.getItem('user');
       if (userData) {
@@ -121,7 +123,7 @@ export default function Header() {
 
           {/* Auth/Profile (Desktop) */}
           <div className="hidden md:flex items-center gap-3 relative">
-            {user ? (
+            {isMounted && user ? (
               <div className="relative profile-dropdown">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -219,7 +221,7 @@ export default function Header() {
               Voice AI
             </button>
             <div className="border-t border-white/10 my-3"></div>
-            {user ? (
+            {isMounted && user ? (
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-red-400 hover:bg-red-500/15 backdrop-blur-sm rounded-xl sm:rounded-2xl active:scale-95"
@@ -227,7 +229,7 @@ export default function Header() {
                 <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 Logout
               </button>
-            ) : (
+            ) : isMounted && (
               <>
                 <Link href="/login" onClick={() => setMenuOpen(false)} className="block px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-white/80 hover:bg-white/15 backdrop-blur-sm rounded-xl sm:rounded-2xl active:scale-95">Login</Link>
                 <Link href="/signup" onClick={() => setMenuOpen(false)} className="block px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl shadow-lg active:scale-95">Sign Up</Link>
