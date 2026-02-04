@@ -1,0 +1,124 @@
+'use client';
+
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+
+interface User {
+  email: string;
+  name: string;
+  role: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<void>;
+  logout: () => void;
+  isLoading: boolean;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+        fetchUser(storedToken);
+      } else {
+        setIsLoading(false);
+      }
+    }
+  }, []);
+
+  const fetchUser = async (authToken: string) => {
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+      } else {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token');
+        }
+        setToken(null);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Login failed');
+    }
+
+    const data = await res.json();
+    setToken(data.token);
+    setUser(data.user);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', data.token);
+    }
+    router.push('/');
+  };
+
+  const register = async (email: string, password: string, name: string) => {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, name })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Registration failed');
+    }
+
+    const data = await res.json();
+    setToken(data.token);
+    setUser(data.user);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', data.token);
+    }
+    router.push('/');
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+    }
+    router.push('/login');
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, token, login, register, logout, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
+  return context;
+}
