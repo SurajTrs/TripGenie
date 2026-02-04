@@ -78,7 +78,7 @@ export default function PaymentsView({ searchTerm = '' }: { searchTerm?: string 
               <DollarSign className="text-white" size={24} />
             </div>
           </div>
-          <h3 className="text-gray-600 text-sm font-medium">Today's Revenue</h3>
+          <h3 className="text-gray-600 text-sm font-medium">Today&apos;s Revenue</h3>
           <p className="text-3xl font-bold text-gray-900 mt-2">₹{(stats.todayRevenue / 1000).toFixed(1)}K</p>
           <p className="text-green-600 text-sm font-semibold mt-2">+18.2% from yesterday</p>
         </div>

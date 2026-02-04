@@ -198,7 +198,7 @@ export default function DashboardView({ searchTerm = '' }: { searchTerm?: string
             </div>
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
               <div>
-                <p className="text-sm text-gray-600">Today's Bookings</p>
+                <p className="text-sm text-gray-600">Today&apos;s Bookings</p>
                 <p className="text-2xl font-bold text-gray-900">{recentBookings.filter(b => new Date(b.date).toDateString() === new Date().toDateString()).length}</p>
               </div>
               <Plane className="text-blue-600" size={32} />
