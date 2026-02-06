@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Pacifico } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const pacifico = Pacifico({
@@ -43,6 +44,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
       >
+        <Script
+          id="travelpayouts-verify"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function () {var script = document.createElement("script");script.async = 1;script.src = 'https://emrldco.com/NDk2MTQ4.js?t=496148';document.head.appendChild(script);})();`,
+          }}
+        />
         <AuthProvider>
           {children}
         </AuthProvider>
