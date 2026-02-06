@@ -34,24 +34,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
+        <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false" dangerouslySetInnerHTML={{__html: `(function () {var script = document.createElement("script");script.async = 1;script.src = 'https://emrldco.com/NDk2MTQ4.js?t=496148';document.head.appendChild(script);})();`}} />
         <link
           href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
           rel="stylesheet"
-        />
-        <script
-          data-noptimize="1"
-          data-cfasync="false"
-          data-wpfc-render="false"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                  var script = document.createElement("script");
-                  script.async = 1;
-                  script.src = 'https://emrldco.com/NDk2MTQ4.js?t=496148';
-                  document.head.appendChild(script);
-              })();
-            `,
-          }}
         />
       </head>
       <body
