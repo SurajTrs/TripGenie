@@ -5,9 +5,20 @@ const nextConfig = {
     unoptimized: true,
   },
   typescript: {
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
     ignoreBuildErrors: true,
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://emrldco.com;",
+          },
+        ],
+      },
+    ];
   },
 };
 
