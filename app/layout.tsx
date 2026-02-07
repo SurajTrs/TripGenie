@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Pacifico } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const pacifico = Pacifico({
@@ -35,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false" dangerouslySetInnerHTML={{__html: `(function () {var script = document.createElement("script");script.async = 1;script.src = 'https://emrldco.com/NDk2MTQ4.js?t=496148';document.head.appendChild(script);})();`}} />
+        <script async src="https://emrldco.com/NDk2MTQ4.js?t=496148" data-cfasync="false" />
         <link
           href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
           rel="stylesheet"
@@ -44,13 +43,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
       >
-        <Script
-          id="travelpayouts-verify"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function () {var script = document.createElement("script");script.async = 1;script.src = 'https://emrldco.com/NDk2MTQ4.js?t=496148';document.head.appendChild(script);})();`,
-          }}
-        />
         <AuthProvider>
           {children}
         </AuthProvider>
